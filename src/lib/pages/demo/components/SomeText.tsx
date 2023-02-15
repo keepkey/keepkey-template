@@ -112,12 +112,12 @@ const SomeText = () => {
               <Td>{features?.model}</Td>
             </Tr>
             <Tr>
-              <Td>Policies</Td>
-              <Td>
-                {features?.policies
-                  .map((policy) => policy.policy_name)
-                  .join(", ")}
-              </Td>
+              {/* <Td>Policies</Td> */}
+              {/* <Td> */}
+              {/*  {features?.policies */}
+              {/*    .map((policy) => policy?.policy_name) */}
+              {/*    .join(", ")} */}
+              {/* </Td> */}
             </Tr>
             <Tr>
               <Td>Passphrase Cached</Td>

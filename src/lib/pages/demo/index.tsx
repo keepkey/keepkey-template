@@ -6,6 +6,7 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
+
 import SomeText from "./components/SomeText";
 
 const Home = () => {

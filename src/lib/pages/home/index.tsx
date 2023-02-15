@@ -1,11 +1,4 @@
-import {
-  Grid,
-  Tabs,
-  Tab,
-  TabList,
-  TabPanels,
-  TabPanel,
-} from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 
 import CTASection from "./components/CTASection";
 import SomeImage from "./components/SomeImage";
