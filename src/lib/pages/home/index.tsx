@@ -15,8 +15,8 @@ const Home = () => {
     <Grid gap={4}>
       <Tabs>
         <TabList>
-          <Tab>KeepKey info</Tab>
-          <Tab>extended pubkeys</Tab>
+          <Tab>KeepKey Info</Tab>
+          <Tab>Extended Pubkeys</Tab>
         </TabList>
 
         <TabPanels>
