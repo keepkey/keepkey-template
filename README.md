@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/TsgeCJ1.png" />
+<img src="https://www.keepkey.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fwallet-horizontal.11dd0ccf.png&w=2048&q=100" />
 
 Welcome To The KeepKey Template
 

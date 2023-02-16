@@ -1,16 +1,33 @@
-import { Grid } from "@chakra-ui/react";
+import {
+  Grid,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanels,
+  TabPanel,
+} from "@chakra-ui/react";
 
-import CTASection from "./components/CTASection";
-import SomeImage from "./components/SomeImage";
 import SomeText from "./components/SomeText";
-// import { KeepKeySdk } from '@keepkey/keepkey-sdk'
+import Pubkeys from "./components/Pubkeys";
 
 const Home = () => {
   return (
     <Grid gap={4}>
-      <SomeText />
-      <SomeImage />
-      <CTASection />
+      <Tabs>
+        <TabList>
+          <Tab>KeepKey info</Tab>
+          <Tab>extended pubkeys</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel>
+            <SomeText />
+          </TabPanel>
+          <TabPanel>
+            <Pubkeys />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Grid>
   );
 };
