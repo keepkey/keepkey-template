@@ -10,10 +10,10 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import { KeepKeySdk } from "@keepkey/keepkey-sdk";
 import React, { useEffect } from "react";
 
-const SomeText = () => {
+//@ts-ignore
+const Features = ({ sdk }) => {
   const [features, setFeatures] = React.useState({
     auto_lock_delay_ms: undefined,
     no_backup: false,
@@ -40,26 +40,7 @@ const SomeText = () => {
 
   const onStart = async function () {
     try {
-      const spec = "http://localhost:1646/spec/swagger.json";
-      const apiKey = localStorage.getItem("apiKey") || "1234";
-      const config = {
-        apiKey,
-        pairingInfo: {
-          name: "KeepKey-template Demo App",
-          imageUrl:
-            "https://github.com/BitHighlander/keepkey-desktop/raw/master/electron/icon.png",
-          basePath: spec,
-          url: "http://localhost:1646",
-        },
-      };
-      // init
-      const sdk = await KeepKeySdk.create(config);
-      if (config.apiKey !== apiKey)
-        localStorage.setItem("apiKey", config.apiKey);
-
-      // eslint-disable-next-line no-console
-      console.log("apiKey: ", config.apiKey);
-
+      console.log("sdk: ", sdk);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const featuresKK = await sdk.system.info.getFeatures();
@@ -184,4 +165,4 @@ const SomeText = () => {
   );
 };
 
-export default SomeText;
+export default Features;
