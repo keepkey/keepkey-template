@@ -7,6 +7,7 @@ import {
   Heading,
   Stack,
   StackDivider,
+  Spinner
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
@@ -14,9 +15,12 @@ import React, { useEffect } from "react";
 // @ts-ignore
 const Pubkeys = ({ sdk }) => {
   const [pubkeys, setPubkeys] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   const onStart = async function () {
     try {
+      setLoading(true);
+      console.log("sdk: ", sdk);
       // Unsigned TX
       const paths = [
         {
@@ -95,12 +99,14 @@ const Pubkeys = ({ sdk }) => {
         const pubkeyInfo: any = paths[i];
         pubkeyInfo.xpub = pubkey.xpub;
         pubkeysQuery.push(pubkeyInfo);
+        // @ts-ignore
       }
       // eslint-disable-next-line no-console
       console.log(pubkeysQuery);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       setPubkeys(pubkeysQuery);
+      setLoading(false);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
@@ -110,10 +116,11 @@ const Pubkeys = ({ sdk }) => {
   // onstart get data
   useEffect(() => {
     onStart();
-  }, []);
+  }, [sdk]);
 
   return (
     <Grid textAlign="center" gap={2}>
+      {loading && <Spinner size="xl" />}
       {pubkeys.map((pubkey: any) => (
         <Card>
           <CardHeader>

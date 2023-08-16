@@ -217,6 +217,7 @@ const Txs = ({ sdk }) => {
           responseSign = await sdk.utxo.utxoSignTransaction(input);
           break;
         case "cosmos":
+          // @ts-ignore
           input = {
             addressNList: [2147483692, 2147483653, 2147483648, 0, 0],
             chain_id: "cosmoshub-4",

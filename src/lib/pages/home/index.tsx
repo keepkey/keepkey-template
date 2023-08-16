@@ -33,6 +33,7 @@ const Home = () => {
         localStorage.setItem("apiKey", config.apiKey);
 
       console.log(sdk);
+      // @ts-ignore
       setSdk(sdk);
     } catch (e) {
       // eslint-disable-next-line no-console

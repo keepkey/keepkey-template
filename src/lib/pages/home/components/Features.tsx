@@ -58,7 +58,7 @@ const Features = ({ sdk }) => {
   // onstart get data
   useEffect(() => {
     onStart();
-  }, []);
+  }, [sdk]);
 
   return (
     <Grid textAlign="center" gap={2}>
