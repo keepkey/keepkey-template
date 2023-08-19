@@ -2,6 +2,12 @@
 
 Welcome To The KeepKey Template
 
+keepkey:[keepkey](https://keepkey.com/)
+
+Docs:[docs](https://keepkey.info/)
+
+tutorial:[medium](https://medium.com/@highlander_35968/building-on-the-keepkey-sdk-2023fda41f38)
+
 This is a project bootstrapped with [`@vitejs/app`](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) (`react-ts`), added with [Chakra UI](https://chakra-ui.com) and [TypeScript](https://www.typescriptlang.org) setup.
 
 - ⚡ blazing fast dev server and build
