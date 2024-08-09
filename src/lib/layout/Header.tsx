@@ -4,37 +4,14 @@ import {
   Avatar,
   AvatarBadge,
   Button,
-  HStack,
-  IconButton,
-  Link,
   Menu,
-  Image,
   MenuButton,
-  MenuDivider,
-  Icon,
-  MenuItem,
   MenuList,
-  Spacer,
-  Text,
-  useDisclosure,
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
-  SimpleGrid,
-  Card,
-  CardHeader,
-  Heading,
-  CardBody,
-  CardFooter,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
 } from "@chakra-ui/react";
 import { KeepKeySdk } from "@keepkey/keepkey-sdk";
 import { useEffect, useState } from "react";
@@ -50,6 +27,32 @@ const configKeepKey: any = {
     basePath: spec,
     url: "https://keepkey-template.vercel.app/",
   },
+};
+
+const checkKeepkeyAvailability = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+};
+
+let attempt = 0;
+
+const checkAndLaunch = async () => {
+  attempt++;
+  if (!(await checkKeepkeyAvailability(spec))) {
+    if (attempt === 3) {
+      alert(
+          'KeepKey desktop is required for keepkey-sdk, please go to https://keepkey.com/get-started',
+      );
+    } else {
+      window.location.assign('keepkey://launch');
+      await new Promise((resolve) => setTimeout(resolve, 30000));
+      checkAndLaunch();
+    }
+  }
 };
 
 const Header = () => {
@@ -73,125 +76,68 @@ const Header = () => {
         setKeepKeyConnected(true);
       }
       setKeepKeyFeatures(featuresKK);
-      // setKeepKeyConnected(true);
     } catch (e) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       setKeepKeyError("Bridge is offline!");
     }
   };
 
-  // onStart()
   useEffect(() => {
-    onStart();
+    const initialize = async () => {
+      await checkAndLaunch();
+      onStart();
+    };
+    initialize();
   }, []); // once on startup
 
   return (
-    <Flex
-      as="header"
-      width="full"
-      align="center"
-      alignSelf="flex-start"
-      justifyContent="center"
-      gridGap={2}
-    >
-      <Box marginLeft="auto">
-        <Menu>
-          <MenuButton
-            as={Button}
-            rounded="full"
-            variant="link"
-            cursor="pointer"
-            minW={200}
-          >
-            <Avatar size="lg" src={KEEPKEY_ICON}>
-              {keepkeyConnected ? (
-                <AvatarBadge boxSize="1.25em" bg="green.500" />
-              ) : (
-                <AvatarBadge boxSize="1.25em" bg="red.500" />
-              )}
-            </Avatar>
-          </MenuButton>
-          <MenuList>
-            {/* <MenuItem>{state.username}</MenuItem> */}
-            {/* <MenuDivider /> */}
-            {/* <MenuItem> */}
-            {/*  <SimpleGrid columns={3} rows={1}> */}
-            {/*    <Card align="center" onClick={() => setContextWallet("native")}> */}
-            {/*      <CardBody> */}
-            {/*        <Avatar src={PIONEER_ICON}> */}
-            {/*          {nativePaired ? ( */}
-            {/*              <div> */}
-            {/*                <AvatarBadge boxSize="1.25em" bg="green.500" /> */}
-            {/*              </div> */}
-            {/*          ) : ( */}
-            {/*              <div> */}
-            {/*                <AvatarBadge boxSize="1.25em" bg="red.500" /> */}
-            {/*              </div> */}
-            {/*          )} */}
-            {/*        </Avatar> */}
-            {/*      </CardBody> */}
-            {/*      <small>Pioneer</small> */}
-            {/*    </Card> */}
-            {/*    <Card align="center" onClick={() => setContextWallet("metamask")}> */}
-            {/*      <CardBody> */}
-            {/*        <Avatar src={METAMASK_ICON}> */}
-            {/*          {metamaskPaired ? ( */}
-            {/*              <div> */}
-            {/*                <AvatarBadge boxSize="1.25em" bg="green.500" /> */}
-            {/*              </div> */}
-            {/*          ) : ( */}
-            {/*              <div> */}
-            {/*                <AvatarBadge boxSize="1.25em" bg="red.500" /> */}
-            {/*              </div> */}
-            {/*          )} */}
-            {/*        </Avatar> */}
-            {/*      </CardBody> */}
-            {/*      <small>MetaMask</small> */}
-            {/*    </Card> */}
-            {/*    <Card align="center" onClick={() => setContextWallet("keepkey")}> */}
-            {/*      <CardBody> */}
-            {/*        <Avatar src={KEEPKEY_ICON}> */}
-            {/*          {keepkeyPaired ? ( */}
-            {/*              <div> */}
-            {/*                <AvatarBadge boxSize="1.25em" bg="green.500" /> */}
-            {/*              </div> */}
-            {/*          ) : ( */}
-            {/*              <div> */}
-            {/*                <AvatarBadge boxSize="1.25em" bg="red.500" /> */}
-            {/*              </div> */}
-            {/*          )} */}
-            {/*        </Avatar> */}
-            {/*      </CardBody> */}
-            {/*      <small>KeepKey</small> */}
-            {/*    </Card> */}
-            {/*  </SimpleGrid> */}
-            {/* </MenuItem> */}
-            <Accordion defaultIndex={[0]} allowMultiple>
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box as="span" flex="1" textAlign="left">
-                      <small>features:</small>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <small>
-                    version: {features?.major_version}.{features?.minor_version}
-                    .{features?.patch_version}
-                  </small>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-            {/* <MenuItem>context: {user.context || "not Paired"}</MenuItem> */}
-            {/* <MenuDivider /> */}
-            {/* <MenuItem>Total Value(usd): {user.totalValueUsd}</MenuItem> */}
-          </MenuList>
-        </Menu>
-      </Box>
-    </Flex>
+      <Flex
+          as="header"
+          width="full"
+          align="center"
+          alignSelf="flex-start"
+          justifyContent="center"
+          gridGap={2}
+      >
+        <Box marginLeft="auto">
+          <Menu>
+            <MenuButton
+                as={Button}
+                rounded="full"
+                variant="link"
+                cursor="pointer"
+                minW={200}
+            >
+              <Avatar size="lg" src={KEEPKEY_ICON}>
+                {keepkeyConnected ? (
+                    <AvatarBadge boxSize="1.25em" bg="green.500" />
+                ) : (
+                    <AvatarBadge boxSize="1.25em" bg="red.500" />
+                )}
+              </Avatar>
+            </MenuButton>
+            <MenuList>
+              <Accordion defaultIndex={[0]} allowMultiple>
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box as="span" flex="1" textAlign="left">
+                        <small>features:</small>
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    <small>
+                      version: {features?.major_version}.{features?.minor_version}
+                      .{features?.patch_version}
+                    </small>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+            </MenuList>
+          </Menu>
+        </Box>
+      </Flex>
   );
 };
 
